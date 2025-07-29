@@ -1,0 +1,16 @@
+Header {
+    dock: top;
+    height: 3;
+    content-align: center middle;
+    background: navy;
+    color: white;
+}
+
+#lb_nome {
+    text-align: center;
+}
+
+Button:hover {
+    background: aqua;
+}
+
