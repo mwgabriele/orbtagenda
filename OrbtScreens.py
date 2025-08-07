@@ -11,10 +11,16 @@ class TelaInicial(Screen):
         Binding(key="escape", action="app.switch_screen('tela_inicial')", description="Voltar")
     ]
 
-    CSS_PATH =  "style.tcss"
+    # CSS_PATH =  "style.tcss"
     TITLE = "Orbita Agenda"
-    SUB_TITLE = "versão 0.0.2"
+    SUB_TITLE = "versão 0.0.4"
 
+    AGENDA = {
+        "nome@email.com": {
+            "nome": "Nome do evento", "data": "data do evento"
+            }
+    }
+    
     def compose(self):
         yield Header()
         yield Footer()
@@ -35,13 +41,9 @@ class TelaInicial(Screen):
 
     def on_button_pressed(self, evento: Button.Pressed):
 
-        if evento.button.id == 'bt_lista':
-            self.push_screen(TelaListagem())
-
         if evento.button.id == 'bt_limpar':
 
-            for um_input in self.query('Input'):
-                um_input.value = ''
+            self.LimparFormulario()
 
         if evento.button.id == 'bt_cadastrar':
 
@@ -49,13 +51,20 @@ class TelaInicial(Screen):
             email = self.query_one('#tx_email', Input).value
             data = self.query_one('#tx_data', Input).value
 
-            OrbtAgenda.AGENDA[email] = {"nome": nome, "data": data}
+            TelaInicial.AGENDA[email] = {"nome": nome, "data": data}
 
             self.notify(f"{nome} em {data} cadastrado!")
             self.LimparFormulario()
             self.query_one("#tx_nome", Input).focus()
 
-            #if evento.button.id == 'bt_cadastrar' and 
+            # if evento.button.id == 'bt_cadastrar' and nome or email :
+
 
 class TelaListagem(TelaInicial):
+
+    TITLE = "Orbita Agenda"
+    SUB_TITLE = "Lista de Cadastros"
     
+
+    def compose(self):
+        yield Pretty(TelaListagem.AGENDA)

@@ -8,10 +8,6 @@ from textual.binding import Binding
 
 from OrbtScreens import *
 
-class TelaListagem(Screen):
-    def compose(self):
-        yield Pretty(OrbtAgenda.AGENDA)
-
 class OrbtAgenda(App):
 
     BINDINGS = [
@@ -20,11 +16,13 @@ class OrbtAgenda(App):
         Binding(key="escape", action="quit", description="Sair", show=False)
     ]
 
-    AGENDA = {
-        "nome@email.com": {
-            "nome": "Nome do evento", "data": "data do evento"
-            }
-    }
+    def on_mount(self):
+        self.install_screen(TelaInicial, 'tela_inicial')
+        self.install_screen(TelaListagem, 'tela_listagem')
+
+    def compose(self):
+        yield Header()
+        yield Footer()
 
 if __name__ == "__main__":
     app = OrbtAgenda()
