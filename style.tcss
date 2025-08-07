@@ -6,10 +6,6 @@ Header {
     color: white;
 }
 
-#lb_nome {
-    text-align: center;
-}
-
 Button:hover {
     background: aqua;
 }
